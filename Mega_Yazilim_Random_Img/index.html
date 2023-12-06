@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rastgele Resimler</title>
+  <style>
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .image-container {
+      flex: 0 0 20%;
+      margin: 5px;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      //object-fit: cover; /* Resim oranını korumak için */
+      border-radius: 8px;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div class="image-container" id="image1"></div>
+  <div class="image-container" id="image2"></div>
+  <div class="image-container" id="image3"></div>
+  
+  <script>
+    // Resim URL'lerini rastgele seçme fonksiyonu
+    function getRandomImageUrl() {
+      const width = Math.floor(Math.random() * 100)+50;
+      const height = Math.floor(Math.random() * 100)+50;
+      return `https://source.unsplash.com/random/${width}x${height}`;
+    }
+
+    // Belirli bir siteden resim çekme fonksiyonu
+    function getImages(containerId) {
+      const container = document.getElementById(containerId);
+
+      // Resimleri değiştirmek için önceden mevcut resimleri temizle
+      container.innerHTML = '';
+
+      // Her bir resmi container'a ekleyin
+      for (let index = 0; index < 5; index++) {
+        const imgElement = document.createElement('img');
+        imgElement.src = getRandomImageUrl();
+        imgElement.alt = `Image ${index + 1}`;
+        container.appendChild(imgElement);
+      }
+    }
+
+    // Sayfa yüklendiğinde ve her yenilendiğinde belirli bir siteden resimleri al
+    document.addEventListener('DOMContentLoaded', () => {
+      ['image1', 'image2', 'image3'].forEach(containerId => {
+        getImages(containerId);
+      });
+    });
+
+    // Sayfa yenilendiğinde resimleri değiştir
+    document.addEventListener('keydown', (event) => {
+      if (event.code === 'F5') {
+        ['image1', 'image2', 'image3'].forEach(containerId => {
+          getImages(containerId);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
